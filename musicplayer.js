@@ -22,22 +22,22 @@ let curr_track = document.createElement('audio');
 // Define the tracks that have to be played
 let track_list = [
   {
-    name: "Enthusiast",
-    artist: "Tours",
+    name: "Yours Today",
+    artist: "Lexx Strange",
     image: "https://1000logos.net/wp-content/uploads/2017/11/Spotify_logo_PNG23.png?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3"
+    path: "https://on.soundcloud.com/nq2R8/music/Lexx_Strange/Yours_Today/Lexx Strange_-_01_-_Yours_Today.mp3"
   },
   {
-    name: "Night Owl",
-    artist: "Broke For Free",
+    name: "One Step At A Time",
+    artist: "Beat Mekanik",
     image: "https://1000logos.net/wp-content/uploads/2017/11/Spotify_logo_PNG23.png?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3"
+    path: "https://on.soundcloud.com/vU47b/music/Beat_Mekanik/One_Step_At_A_Time/Beat_Mekanik_-_01_-_One_Step_At_A_Time.mp3"
   },
   {
-    name: "Shipping Lanes",
-    artist: "Chad Crouch",
+    name: "Cooler Than A Bitch",
+    artist: "Gunna",
     image: "https://1000logos.net/wp-content/uploads/2017/11/Spotify_logo_PNG23.png?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3",
+    path: "https://on.soundcloud.com/5WyCV/music/Gunna/Cooler_Than_A_Bitch/Gunna_-_Cooler_Than_A_Bitch.mp3",
   },
 ];
 
