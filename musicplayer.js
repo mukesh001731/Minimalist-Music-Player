@@ -1,3 +1,23 @@
+function loadTrack(track_index) {
+  clearInterval(updateTimer);
+  resetValues();
+  let track = track_list[track_index];
+  let track_url = `https://w.soundcloud.com/player/?url=${track.path}&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
+  let iframe = document.createElement('iframe');
+  iframe.setAttribute('src', track_url);
+  iframe.setAttribute('width', '100%');
+  iframe.setAttribute('height', '166');
+  iframe.setAttribute('scrolling', 'no');
+  iframe.setAttribute('frameborder', 'no');
+  track_art.innerHTML = '';
+  track_art.appendChild(iframe);
+  track_name.textContent = track.name;
+  track_artist.textContent = track.artist;
+  now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;
+  updateTimer = setInterval(seekUpdate, 1000);
+  random_bg_color();
+}
+
 let now_playing = document.querySelector(".now-playing");
 let track_art = document.querySelector(".track-art");
 let track_name = document.querySelector(".track-name");
@@ -25,19 +45,19 @@ let track_list = [
     name: "Yours Today",
     artist: "Lexx Strange",
     image: "https://1000logos.net/wp-content/uploads/2017/11/Spotify_logo_PNG23.png?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://on.soundcloud.com/nq2R8/music/Lexx_Strange/Yours_Today/Lexx Strange_-_01_-_Yours_Today.mp3"
+    path: "https://soundcloud.com/lexxstrange/yours-today"
   },
   {
-    name: "One Step At A Time",
-    artist: "Beat Mekanik",
+    name: "The Funeral",
+    artist: "Band Of Horses",
     image: "https://1000logos.net/wp-content/uploads/2017/11/Spotify_logo_PNG23.png?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://on.soundcloud.com/vU47b/music/Beat_Mekanik/One_Step_At_A_Time/Beat_Mekanik_-_01_-_One_Step_At_A_Time.mp3"
+    path: "https://soundcloud.com/bandofhorses/the-funeral"
   },
   {
     name: "Cooler Than A Bitch",
     artist: "Gunna",
     image: "https://1000logos.net/wp-content/uploads/2017/11/Spotify_logo_PNG23.png?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://on.soundcloud.com/5WyCV/music/Gunna/Cooler_Than_A_Bitch/Gunna_-_Cooler_Than_A_Bitch.mp3",
+    path: "https://soundcloud.com/gunna/cooler-than-a-bitch-feat-roddy-ricch"
   },
 ];
 
@@ -58,16 +78,20 @@ function random_bg_color() {
 function loadTrack(track_index) {
   clearInterval(updateTimer);
   resetValues();
-  curr_track.src = track_list[track_index].path;
-  curr_track.load();
-
-  track_art.style.backgroundImage = "url(" + track_list[track_index].image + ")";
-  track_name.textContent = track_list[track_index].name;
-  track_artist.textContent = track_list[track_index].artist;
+  let track = track_list[track_index];
+  let track_url = `https://w.soundcloud.com/player/?url=${track.path}&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
+  let iframe = document.createElement('iframe');
+  iframe.setAttribute('src', track_url);
+  iframe.setAttribute('width', '100%');
+  iframe.setAttribute('height', '166');
+  iframe.setAttribute('scrolling', 'no');
+  iframe.setAttribute('frameborder', 'no');
+  track_art.innerHTML = '';
+  track_art.appendChild(iframe);
+  track_name.textContent = track.name;
+  track_artist.textContent = track.artist;
   now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;
-
   updateTimer = setInterval(seekUpdate, 1000);
-  curr_track.addEventListener("ended", nextTrack);
   random_bg_color();
 }
 
@@ -85,24 +109,11 @@ function playpauseTrack() {
   else pauseTrack();
 }
 
-function playTrack() {
-  curr_track.play();
-  isPlaying = true;
-  playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
-}
-
-function pauseTrack() {
-  curr_track.pause();
-  isPlaying = false;
-  playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';;
-}
-
 function nextTrack() {
   if (track_index < track_list.length - 1)
     track_index += 1;
   else track_index = 0;
   loadTrack(track_index);
-  playTrack();
 }
 
 function prevTrack() {
@@ -110,7 +121,6 @@ function prevTrack() {
     track_index -= 1;
   else track_index = track_list.length;
   loadTrack(track_index);
-  playTrack();
 }
 
 function seekTo() {
