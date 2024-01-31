@@ -10,11 +10,13 @@ MindfulTunes is a sleek and uncluttered music player designed for simplicity and
 🌈 Features
 
 Minimalistic Design: A clutter-free interface for an immersive music journey.
+
 Seamless Experience: Effortless navigation and controls for a stress-free user experience.
 
 🚀 Getting Started
 
 Clone the repository: git clone https://github.com/your-username/minimalist-music-player.git
+
 Navigate to the project folder: cd minimalist-music-player
 Open index.html in your preferred browser.
 
