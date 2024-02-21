@@ -1,42 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimalist Music player</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music player</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
 </head>
+
 <body>
-    <h2 class="Playing">Now Playing <span class="song-name"></span></h2>
+  <h2 class="Playing">Now Playing <span class="song-name"></span></h2>
 
-<div class=" control">
-   <button class="btnp"><i class="ph ph-skip-back"></i></i></button>
-   <button class="btns"><i class="ph ph-play"></i></button>
-   <button class="btnn"><i class="ph ph-skip-forward"></i></button>
-   
-
-   <div class="slider_container">
-    <div class="current-time">00:00</div>
-    <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
-    <div class="total-duration">00:00</div>
-  </div>
-  
-  <div class="slider_container">
-    <i class="fa fa-volume-down"></i>
-    <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()">
-    <i class="fa fa-volume-up"></i>
+  <div class=" control">
+    <button class="btnp"><i class="ph ph-skip-back"></i></i></button>
+    <button class="btns"><i class="ph ph-play"></i></button>
+    <button class="btnn"><i class="ph ph-skip-forward"></i></button>
   </div>
 
-   <audio class="first" src="song/1.mp3"></audio>
-   <audio class="second"src="song/2.mpg"></audio>
-   <audio class="third"src="song/3.mp3"></audio>
-   <audio class="fourth"src="song/4.mp3"></audio>
+  <div class="feature">
+    <button class="btn-shuffle"><i class="ph ph-shuffle"></i><span class="btn-label"></span></button>
+    <button class="btn-repeat"><i class="ph ph-repeat"></i><span class="btn-label"></span></button>
+  </div>
 
-   
-</div>
+  <div class="main_slider">
+    <div class="slider_container">
+      <div class="current-time">00:00</div>
+      <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
+      <div class="total-duration">00:00</div>
+    </div>
+  </div>
+  <div class="main_slider">
+    <div class="slider_container">
+      <i class="fa fa-volume-down"></i>
+      <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()">
+      <i class="fa fa-volume-up"></i>
+    </div>
+  </div>
+  <audio class="first" src="song/1.mp3"></audio>
+  <audio class="second" src="song/2.mp3"></audio>
+  <audio class="third" src="song/3.mp3"></audio>
+  <audio class="fourth" src="song/4.mp3"></audio>
+
+
+  </div>
 </body>
 <script src="script.js"></script>
+
 </html>
