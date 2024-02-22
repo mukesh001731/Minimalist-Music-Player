@@ -154,3 +154,168 @@ function seekUpdate() {
     total_duration.textContent = durationMinutes + ":" + durationSeconds;
   }
 }
+
+
+
+
+
+
+
+
+
+
+//Old JS Code 
+const audioElements = document.querySelectorAll('audio');
+const btnPlay = document.querySelector('.btns');
+const btnPrev = document.querySelector('.btnp');
+const btnNext = document.querySelector('.btnn');
+const songName = document.querySelector('.song-name');
+
+const currentTimeElement = document.querySelector('.current-time');
+const totalDurationElement = document.querySelector('.total-duration');
+const seekSlider = document.querySelector('.seek_slider');
+const volumeSlider = document.querySelector('.volume_slider');
+
+const btnShuffle = document.querySelector('.btn-shuffle');
+const btnRepeat = document.querySelector('.btn-repeat');
+
+
+let currentAudioIndex = 0;
+
+// audioElements[currentAudioIndex].play();
+songName.textContent = audioElements[currentAudioIndex].src.split('/').pop();
+
+let isSeeking = false; //Time & Duration
+
+let isShuffleOn = false;
+let isRepeatOn = false;
+
+btnPlay.addEventListener('click', () => {
+  if (audioElements[currentAudioIndex].paused) {
+    audioElements[currentAudioIndex].play();
+  } else {
+    audioElements[currentAudioIndex].pause();
+  }
+});
+
+btnPrev.addEventListener('click', () => {
+  audioElements[currentAudioIndex].pause();
+  currentAudioIndex--;
+  if (currentAudioIndex < 0) {
+    currentAudioIndex = audioElements.length - 1;
+  }
+  audioElements[currentAudioIndex].play();
+  songName.textContent = audioElements[currentAudioIndex].src.split('/').pop();
+});
+
+btnNext.addEventListener('click', () => {
+  audioElements[currentAudioIndex].pause();
+  currentAudioIndex++;
+  if (currentAudioIndex >= audioElements.length) {
+    currentAudioIndex = 0;
+  }
+  audioElements[currentAudioIndex].play();
+  songName.textContent = audioElements[currentAudioIndex].src.split('/').pop();
+});
+
+
+// Update the total duration display when the audio duration is available
+audioElements[currentAudioIndex].onloadedmetadata = function() {
+  totalDurationElement.textContent = formatTime(audioElements[currentAudioIndex].duration);
+};
+
+// Update the current time display every 100 milliseconds
+const updateInterval = setInterval(() => {
+  if (!isSeeking && audioElements[currentAudioIndex].currentTime > 0 && !audioElements[currentAudioIndex].paused) {
+    updateTimeDisplays();
+  }
+}, 100);
+
+// Handle seek operation
+seekSlider.addEventListener('input', () => {
+  isSeeking = true;
+  const seekTime = audioElements[currentAudioIndex].duration * (seekSlider.value / 100);
+  currentTimeElement.textContent = formatTime(seekTime);
+});
+
+seekSlider.addEventListener('change', () => {
+  const seekTime = audioElements[currentAudioIndex].duration * (seekSlider.value / 100);
+  audioElements[currentAudioIndex].currentTime = seekTime;
+  isSeeking = false;
+});
+
+function formatTime(time) {
+  return `${String(Math.floor(time / 60)).padStart(2, '0')}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
+}
+
+function updateTimeDisplays() {
+  currentTimeElement.textContent = formatTime(audioElements[currentAudioIndex].currentTime);
+  seekSlider.value = (audioElements[currentAudioIndex].currentTime / audioElements[currentAudioIndex].duration) * 100;
+}
+
+volumeSlider.addEventListener('input', () => {
+  const volume = volumeSlider.value / 100;
+  audioElements[currentAudioIndex].volume = volume;
+});
+
+
+
+btnShuffle.addEventListener('click', () => {
+  isShuffleOn = !isShuffleOn;
+
+  const songs = ['song1.mp3', 'song2.mp3', 'song3.mp3', 'song4.mp3'];
+  function shuffleSongs() {
+    for (let i = songs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [songs[i], songs[j]] = [songs[j], songs[i]];
+    }
+  }
+ // Test shuffling the songs
+console.log('Original order:', songs);
+shuffleSongs();
+console.log('Shuffled order:', songs);
+});
+
+btnRepeat.addEventListener('click', () => {
+  isRepeatOn = !isRepeatOn;
+
+  const audioElement = audioElements[currentAudioIndex];
+  function repeatSong() {
+    audioElement.currentTime = 0;
+    audioElement.play();
+  }
+  // Test repeating the current song
+console.log('Current time before repeat:', audioElement.currentTime);
+repeatSong();
+console.log('Current time after repeat:', audioElement.currentTime);
+});
+
+
+
+
+
+
+
+
+
+const shuffleButton = document.querySelector('.btn-shuffle');
+const repeatButton = document.querySelector('.btn-repeat');
+
+shuffleButton.addEventListener('click', function() {
+    if (shuffleButton.textContent === 'on') {
+        shuffleButton.textContent = '';
+    } else {
+        shuffleButton.textContent = 'on';
+    }
+});
+
+repeatButton.addEventListener('click', function() {
+    if (repeatButton.textContent === 'on') {
+        repeatButton.textContent = '';
+    } else {
+        repeatButton.textContent = 'on';
+    }
+});
+
+
+
