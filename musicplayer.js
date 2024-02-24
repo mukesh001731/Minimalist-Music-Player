@@ -298,24 +298,3 @@ console.log('Current time after repeat:', audioElement.currentTime);
 
 
 
-const shuffleButton = document.querySelector('.btn-shuffle');
-const repeatButton = document.querySelector('.btn-repeat');
-
-shuffleButton.addEventListener('click', function() {
-    if (shuffleButton.textContent === 'on') {
-        shuffleButton.textContent = '';
-    } else {
-        shuffleButton.textContent = 'on';
-    }
-});
-
-repeatButton.addEventListener('click', function() {
-    if (repeatButton.textContent === 'on') {
-        repeatButton.textContent = '';
-    } else {
-        repeatButton.textContent = 'on';
-    }
-});
-
-
-
