@@ -1,160 +1,155 @@
-function loadTrack(track_index) {
-  clearInterval(updateTimer);
-  resetValues();
-  let track = track_list[track_index];
-  let track_url = `https://w.soundcloud.com/player/?url=${track.path}&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
-  let iframe = document.createElement('iframe');
-  iframe.setAttribute('src', track_url);
-  iframe.setAttribute('width', '100%');
-  iframe.setAttribute('height', '166');
-  iframe.setAttribute('scrolling', 'no');
-  iframe.setAttribute('frameborder', 'no');
-  track_art.innerHTML = '';
-  track_art.appendChild(iframe);
-  track_name.textContent = track.name;
-  track_artist.textContent = track.artist;
-  now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;
-  updateTimer = setInterval(seekUpdate, 1000);
-  random_bg_color();
-}
 
-let now_playing = document.querySelector(".now-playing");
-let track_art = document.querySelector(".track-art");
-let track_name = document.querySelector(".track-name");
-let track_artist = document.querySelector(".track-artist");
+let track_img = document.querySelector('.track-img');
+let track_title = document.querySelector('.track-title');
+let track_singer = document.querySelector('.track-singer');
 
-let playpause_btn = document.querySelector(".playpause-track");
-let next_btn = document.querySelector(".next-track");
-let prev_btn = document.querySelector(".prev-track");
+let playpause_btn = document.querySelector('.playpause-track');
+let next_btn = document.querySelector('.next-track');
+let prev_btn = document.querySelector('.prev-track');
 
-let seek_slider = document.querySelector(".seek_slider");
-let volume_slider = document.querySelector(".volume_slider");
-let curr_time = document.querySelector(".current-time");
-let total_duration = document.querySelector(".total-duration");
+let seek_slider = document.querySelector('.seek_slider');
+let volume_slider = document.querySelector('.volume_slider');
+let curr_time = document.querySelector('.current-time');
+let total_duration = document.querySelector('.total-duration');
+let randomIcon = document.querySelector('.btn-shuffle .fas');
+let curr_track = document.createElement('audio');
 
 let track_index = 0;
 let isPlaying = false;
+let isRandom = false;
 let updateTimer;
 
-// Create new audio element
-let curr_track = document.createElement('audio');
+const playlist = [
+    {
+        title: 'Keejo Kesari Ke Laal',
+        singer: 'Lakhbir Singh Lakha',
+        image: 'images/4.png',
+        src:"music/1.mp3"
+    },
 
-// Define the tracks that have to be played
-let track_list = [
-  {
-    name: "Yours Today",
-    artist: "Lexx Strange",
-    image: "https://1000logos.net/wp-content/uploads/2017/11/Spotify_logo_PNG23.png?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://soundcloud.com/lexxstrange/yours-today"
-  },
-  {
-    name: "The Funeral",
-    artist: "Band Of Horses",
-    image: "https://1000logos.net/wp-content/uploads/2017/11/Spotify_logo_PNG23.png?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://soundcloud.com/bandofhorses/the-funeral"
-  },
-  {
-    name: "Cooler Than A Bitch",
-    artist: "Gunna",
-    image: "https://1000logos.net/wp-content/uploads/2017/11/Spotify_logo_PNG23.png?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://soundcloud.com/gunna/cooler-than-a-bitch-feat-roddy-ricch"
-  },
+    {
+        title: "Alag Aasmaan",
+        singer: "Anuv Jain",
+        img: "images/5.png",
+        src: "music/2.mp3"
+    },
+    {
+        title: "Chalo Chalein",
+        singer: "Ritviz",
+        img: "images/6.png",
+        src: "music/3.mp3"
+    },
+    {
+        title: "Kasoor",
+        singer: "Prateek Kuhad",
+        img: "images/7.png",
+        src: "music/4.mp3"
+    },
 ];
 
-function random_bg_color() {
-
-  // Get a number between 64 to 256 (for getting lighter colors)
-  let red = Math.floor(Math.random() * 256) + 64;
-  let green = Math.floor(Math.random() * 256) + 64;
-  let blue = Math.floor(Math.random() * 256) + 64;
-
-  // Construct a color withe the given values
-  let bgColor = "rgb(" + red + "," + green + "," + blue + ")";
-
-  // Set the background to that color
-  document.body.style.background = bgColor;
-}
-
-function loadTrack(track_index) {
-  clearInterval(updateTimer);
-  resetValues();
-  let track = track_list[track_index];
-  let track_url = `https://w.soundcloud.com/player/?url=${track.path}&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
-  let iframe = document.createElement('iframe');
-  iframe.setAttribute('src', track_url);
-  iframe.setAttribute('width', '100%');
-  iframe.setAttribute('height', '166');
-  iframe.setAttribute('scrolling', 'no');
-  iframe.setAttribute('frameborder', 'no');
-  track_art.innerHTML = '';
-  track_art.appendChild(iframe);
-  track_name.textContent = track.name;
-  track_artist.textContent = track.artist;
-  now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;
-  updateTimer = setInterval(seekUpdate, 1000);
-  random_bg_color();
-}
-
-function resetValues() {
-  curr_time.textContent = "00:00";
-  total_duration.textContent = "00:00";
-  seek_slider.value = 0;
-}
-
-// Load the first track in the tracklist
 loadTrack(track_index);
 
-function playpauseTrack() {
-  if (!isPlaying) playTrack();
-  else pauseTrack();
+function loadTrack(track_index){
+    clearInterval(updateTimer);
+    reset();
+
+    curr_track.src = playlist[track_index].src;
+    curr_track.load();
+
+    track_img.style.backgroundImage = "url(" + playlist[track_index].img + ")";
+    track_title.textContent = playlist[track_index].title;
+    track_singer.textContent = playlist[track_index].singer;
+
+    updateTimer = setInterval(setUpdate, 1000);
+
+    curr_track.addEventListener('ended', nextTrack);
+   
 }
 
-function nextTrack() {
-  if (track_index < track_list.length - 1)
-    track_index += 1;
-  else track_index = 0;
-  loadTrack(track_index);
+function reset(){
+    curr_time.textContent = "00:00";
+    total_duration.textContent = "00:00";
+    seek_slider.value = 0;
 }
-
-function prevTrack() {
-  if (track_index > 0)
-    track_index -= 1;
-  else track_index = track_list.length;
-  loadTrack(track_index);
+function randomTrack(){
+    isRandom ? pauseRandom() : playRandom();
 }
-
-function seekTo() {
-  let seekto = curr_track.duration * (seek_slider.value / 100);
-  curr_track.currentTime = seekto;
+function playRandom(){
+    isRandom = true;
+    randomIcon.classList.add('randomActive');
 }
-
-function setVolume() {
-  curr_track.volume = volume_slider.value / 100;
+function pauseRandom(){
+    isRandom = false;
+    randomIcon.classList.remove('randomActive');
 }
-
-function seekUpdate() {
-  let seekPosition = 0;
-
-  if (!isNaN(curr_track.duration)) {
-    seekPosition = curr_track.currentTime * (100 / curr_track.duration);
-
-    seek_slider.value = seekPosition;
-
-    let currentMinutes = Math.floor(curr_track.currentTime / 60);
-    let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
-    let durationMinutes = Math.floor(curr_track.duration / 60);
-    let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
-
-    if (currentSeconds < 10) { currentSeconds = "0" + currentSeconds; }
-    if (durationSeconds < 10) { durationSeconds = "0" + durationSeconds; }
-    if (currentMinutes < 10) { currentMinutes = "0" + currentMinutes; }
-    if (durationMinutes < 10) { durationMinutes = "0" + durationMinutes; }
-
-    curr_time.textContent = currentMinutes + ":" + currentSeconds;
-    total_duration.textContent = durationMinutes + ":" + durationSeconds;
-  }
+function repeatTrack(){
+    let current_index = track_index;
+    loadTrack(current_index);
+    playTrack();
 }
+function playpauseTrack(){
+    isPlaying ? pauseTrack() : playTrack();
+}
+function playTrack(){
+    curr_track.play();
+    isPlaying = true;
+    
+    playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+}
+function pauseTrack(){
+    curr_track.pause();
+    isPlaying = false;
+    
+    playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
+}
+function nextTrack(){
+    if(track_index < playlist.length - 1 && isRandom === false){
+        track_index += 1;
+    }else if(track_index < playlist.length - 1 && isRandom === true){
+        let random_index = Number.parseInt(Math.random() * playlist.length);
+        track_index = random_index;
+    }else{
+        track_index = 0;
+    }
+    loadTrack(track_index);
+    playTrack();
+}
+function prevTrack(){
+    if(track_index > 0){
+        track_index -= 1;
+    }else{
+        track_index = playlist.length -1;
+    }
+    loadTrack(track_index);
+    playTrack();
+}
+function seekTo(){
+    let seekto = curr_track.duration * (seek_slider.value / 100);
+    curr_track.currentTime = seekto;
+}
+function setVolume(){
+    curr_track.volume = volume_slider.value / 100;
+}
+function setUpdate(){
+    let seekPosition = 0;
+    if(!isNaN(curr_track.duration)){
+        seekPosition = curr_track.currentTime * (100 / curr_track.duration);
+        seek_slider.value = seekPosition;
 
+        let currentMinutes = Math.floor(curr_track.currentTime / 60);
+        let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
+        let durationMinutes = Math.floor(curr_track.duration / 60);
+        let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
+
+        if(currentSeconds < 10) {currentSeconds = "0" + currentSeconds; }
+        if(durationSeconds < 10) { durationSeconds = "0" + durationSeconds; }
+        if(currentMinutes < 10) {currentMinutes = "0" + currentMinutes; }
+        if(durationMinutes < 10) { durationMinutes = "0" + durationMinutes; }
+
+        curr_time.textContent = currentMinutes + ":" + currentSeconds;
+        total_duration.textContent = durationMinutes + ":" + durationSeconds;
+    }
+}
 
 
 
